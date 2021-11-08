@@ -1,16 +1,16 @@
 'use strict'
 
 const { server } = require('../src/server');
-const { db } = require('../src/auth/models/index');
+const { sequelize } = require('../src/auth/models/index');
 const supertest = require('supertest');
 const mockRequest = supertest(server);
 
 beforeAll(async () => {
-    await db.sync()
+    await sequelize.sync()
 });
 
 afterAll(async () => {
-    await db.drop()
+    await sequelize.drop()
 });
 
 describe('server testing', () => {
@@ -27,8 +27,7 @@ describe('server testing', () => {
    
     test('check for signin', async () => {
         const respons = await mockRequest.post('/signin').auth('admin', 'admin');
-        expect(respons.status).toBe(403)
-
+        expect(respons.status).toEqual(500)
     });
     test('check for signin & signup', async () => {
         const user = await mockRequest.post('/signup').send({

@@ -2,7 +2,7 @@
 
 const express =require('express');
 const app = express();
-const PORT=8000
+const PORT=7000
 require('dotenv').config();
 const router=require('./auth/ router');
 app.use(express.json())
